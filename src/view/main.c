@@ -91,7 +91,7 @@ int fenetreMenu(){
     
     SDL_Surface *Surf_fenetre_menu=NULL;
     SDL_Surface *imagedefond_menu=NULL;
-    imagedefond_menu = SDL_LoadBMP("ressources/fond_fenetre2.bmp");
+    imagedefond_menu = SDL_LoadBMP("../ressources/img/fond_fenetre2.bmp");
     if (imagedefond_menu == NULL)
     {
         printf("C NUL\n");
@@ -100,7 +100,7 @@ int fenetreMenu(){
     SDL_BlitSurface(imagedefond_menu,NULL,Surf_fenetre_menu,NULL);
 
     SDL_Rect position_txt_title ={(WIDTH-553)/2,20,0,0};
-    imagedefond_menu = SDL_LoadBMP("ressources/title.bmp");
+    imagedefond_menu = SDL_LoadBMP("../ressources/img/title.bmp");
     SDL_BlitSurface(imagedefond_menu, NULL, Surf_fenetre_menu,&position_txt_title);
 
 
