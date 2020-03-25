@@ -8,3 +8,4 @@
 #define HEIGHT 450
 
 void SDL_ExitWithError(const char *message); 
+int initGameBoard(SDL_Renderer *renderer, SDL_Color color); 
