@@ -16,14 +16,8 @@ int initGameBoard(SDL_Renderer *renderer, SDL_Color color)
     int sizeBottom = 80; 
     int sizeGuitar = WIDTH - sizeSide*2; 
     int sizeGap = sizeGuitar/nbDiv; 
-
-    //Couleur de fond 
-    if(SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a) != 0) //Prépare la couleur
-        return -1; 
-    if(SDL_RenderClear(renderer) != 0) //Nettoie le render (ici le colorie avec la couleur)
-        return -1;   
-
-    if(SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255) != 0) //Couleur blanche
+     
+    if(SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE) != 0) //Couleur blanche
         return -1;
 
     //Dessine les contours
@@ -37,7 +31,6 @@ int initGameBoard(SDL_Renderer *renderer, SDL_Color color)
 
     //Dessine les cordes
     int currentX = sizeSide + sizeGap; 
-    printf("%d\n", currentX); 
     while(currentX < sizeGuitar+sizeSide)
     {      
         if(SDL_RenderDrawLine(renderer, currentX, 0, currentX, HEIGHT) != 0) //Chaque corde
@@ -45,5 +38,10 @@ int initGameBoard(SDL_Renderer *renderer, SDL_Color color)
         currentX+= sizeGap; 
     }
     
+    return 0; 
+}
+
+int setGameBackground(SDL_Renderer *renderer)
+{
     return 0; 
 }

@@ -9,3 +9,4 @@
 
 void SDL_ExitWithError(const char *message, const char *SDL_Error); 
 int initGameBoard(SDL_Renderer *renderer, SDL_Color color); 
+int setGameBackground(SDL_Renderer *renderer); 
