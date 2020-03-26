@@ -8,19 +8,7 @@ int main(int argc, char *argv[])
     SDL_Texture *texture_foreground, *texture_background = NULL; 
     SDL_Color Color_BlueGrey = {79,109,122,SDL_ALPHA_OPAQUE}; //r, g, b, opacité
 
-    if(SDL_Init(SDL_INIT_VIDEO) != 0) //Init la video de la sdl2
-        SDL_ExitWithError("Erreur init SDL2", SDL_GetError());
-    
-    //Titre, pos x, pos y, taille x, taille y, options fenetre
-    window = SDL_CreateWindow("Zone de jeu !", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN );
-    if(window == NULL)
-        SDL_ExitWithError("Erreur création fenêtre", SDL_GetError());
-
-    //Fenetre a associe, pilote (-1 = premier qui correspond), méthode pour afficher le rendu
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED); 
-    if(renderer == NULL)
-        SDL_ExitWithError("Erreur création renderer", SDL_GetError());
-    SDL_RenderClear(renderer);
+    initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
 
     texture_foreground = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
                             SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT);
@@ -41,7 +29,7 @@ int main(int argc, char *argv[])
     if(SDL_RenderClear(renderer) != 0) //Clear le foreground
         return -1;  
     SDL_RenderCopy(renderer, texture_background, NULL, NULL); 
-    if(initGameBoard(renderer, Color_BlueGrey) != 0) //Dessin sur la texture
+    if(drawGameBoard(renderer, Color_BlueGrey) != 0) //Dessin sur la texture
         SDL_ExitWithError("Erreur init plateau de jeu", SDL_GetError()); 
     SDL_SetRenderTarget(renderer, NULL); // La cible de rendu est de nouveau le renderer. 
     SDL_RenderCopy(renderer, texture_foreground, NULL, NULL); 

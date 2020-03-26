@@ -8,15 +8,34 @@ void SDL_ExitWithError(const char *message, const char *SDL_Error)
     exit(EXIT_FAILURE);
 }
 
+//Init SDL ainsi qu'une fenetre et un renderer
+int initSDLbasics(SDL_Window **window, SDL_Renderer **renderer, const char *windowTitle)
+{
+    if(SDL_Init(SDL_INIT_VIDEO) != 0) //Init la video de la sdl2
+        SDL_ExitWithError("Erreur init SDL2", SDL_GetError());
+    
+    //Titre, pos x, pos y, taille x, taille y, options fenetre
+    *window = SDL_CreateWindow(windowTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN );
+    if(*window == NULL)
+        SDL_ExitWithError("Erreur création fenêtre", SDL_GetError());
+
+    //Fenetre a associe, pilote (-1 = premier qui correspond), méthode pour afficher le rendu
+    *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED); 
+    if(*renderer == NULL)
+        SDL_ExitWithError("Erreur création renderer", SDL_GetError());
+    SDL_RenderClear(*renderer);
+}
+
+
 //Dessine le tableau de jeu
-int initGameBoard(SDL_Renderer *renderer, SDL_Color color)
+int drawGameBoard(SDL_Renderer *renderer, SDL_Color color)
 {
     int nbDiv = 5; //NbStrings = nbDiv -1 
     int sizeSide = 150; 
     int sizeBottom = 80; 
     int sizeGuitar = WIDTH - sizeSide*2; 
     int sizeGap = sizeGuitar/nbDiv; 
-     
+
     if(SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE) != 0) //Couleur blanche
         return -1;
 
