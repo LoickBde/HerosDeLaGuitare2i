@@ -26,6 +26,22 @@ int initSDLbasics(SDL_Window **window, SDL_Renderer **renderer, const char *wind
     SDL_RenderClear(*renderer);
 }
 
+SDL_Texture *loadImage(SDL_Renderer *renderer, const char *path)
+{
+    SDL_Surface *surface_img = NULL; //Pointeur sur la surface temporaire (pour charger une image)
+    SDL_Texture *texture_img = NULL; //Pointeur sur la texture contenat l'image
+
+    surface_img = SDL_LoadBMP(path); //Charge l'image 
+    if(surface_img == NULL)
+        SDL_ExitWithError("Erreur création surface a partir d'une image", SDL_GetError());   
+    texture_img = SDL_CreateTextureFromSurface(renderer, surface_img); //Crée une texture a partir de l'image = texture contenat l'image
+    if(texture_img == NULL)
+        SDL_ExitWithError("Erreur création texture à partir d'images", SDL_GetError()); 
+    SDL_FreeSurface(surface_img);
+
+    return texture_img; 
+}
+
 
 //Dessine le tableau de jeu
 int drawGameBoard(SDL_Renderer *renderer, SDL_Color color)
@@ -60,7 +76,7 @@ int drawGameBoard(SDL_Renderer *renderer, SDL_Color color)
     return 0; 
 }
 
-int setGameBackground(SDL_Renderer *renderer)
+int setGameBoardBackground(SDL_Renderer *renderer)
 {
     return 0; 
 }
