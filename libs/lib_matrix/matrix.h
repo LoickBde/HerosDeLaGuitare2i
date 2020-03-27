@@ -1,5 +1,4 @@
 #include "../include/header.h"
-#include <wiringPi.h>
 #include <wiringPiSPI.h>
 
 #define	SPI_CHANNEL	1 //deux channel 0 ou 1
@@ -18,10 +17,7 @@ char test[] = {
 
 char good[] = {0x3C,0x42,0xA5,0x81,0xA5,0x99,0x42,0x3C};
 
-
 char bad[] = {0x3C,0x42,0xA5,0x81,0x99,0xA5,0x42,0x3C};
-
-
 
 void initSPI(void); //fonction d'initialisation du bus SPI
 
