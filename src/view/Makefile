@@ -5,7 +5,7 @@ all: main.exe
 CONF_OPT_UBU = -I/usr/include/SDL2 -D_REENTRANT -lSDL2
 
 main.exe: main.c
-	gcc main.c $(CONF_OPT_UBU) -o main.exe
+	gcc -Wall -Wextra -L.\lib -I.\include ./main.c -o main.exe -lSDL2main -lSDL2 -lSDL2_ttf
 	mv main.exe ../../bin/
 
 clean: 

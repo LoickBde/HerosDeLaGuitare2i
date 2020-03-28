@@ -8,7 +8,8 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #define WIDTH 800
 #define HEIGHT 450
@@ -20,14 +21,20 @@ void SDL_ExitWithError(const char *message);
 
 int main(int argc, char *argv[])
 {
+
     //Lancement SDL
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
         SDL_ExitWithError("Initialisation SDL");
-
+    if(TTF_Init() == -1)
+    {
+        fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
+    }
     if (fenetreMenu() != 0)
     {
         SDL_ExitWithError("Erreur fenetre");
     }
+    TTF_Quit();
     SDL_Quit();
     
     return EXIT_SUCCESS;
@@ -36,6 +43,8 @@ int fenetreMenu(){
     SDL_Window *window_menu = NULL;
     SDL_Renderer *renderer = NULL;
     SDL_bool fenetre_lance = SDL_TRUE;
+
+
         //Création fenêtre + rendu
     if (SDL_CreateWindowAndRenderer(WIDTH,HEIGHT,0,&window_menu,&renderer) != 0)
     {
@@ -88,10 +97,22 @@ int fenetreMenu(){
     SDL_RenderPresent(renderer);
 
     /********* AFFICHAGE IMAGE TECHNIQUE 2 *********/
-    
+    TTF_Font *font1 = NULL;
+    font1 = TTF_OpenFont( "../../ressources/fonts/BebasNeue-Regular.ttf", 50);
+    if (font1 == NULL)
+    {
+        printf("voilà\n");
+    }
+    SDL_Color textColorN = { 0, 0, 0, 255 };
+    SDL_Surface *message = NULL;
+
+
     SDL_Surface *Surf_fenetre_menu=NULL;
     SDL_Surface *imagedefond_menu=NULL;
-    imagedefond_menu = SDL_LoadBMP("../ressources/img/fond_fenetre2.bmp");
+
+
+
+    imagedefond_menu = SDL_LoadBMP("../../ressources/img/fond_fenetre2.bmp");
     if (imagedefond_menu == NULL)
     {
         printf("C NUL\n");
@@ -100,9 +121,12 @@ int fenetreMenu(){
     SDL_BlitSurface(imagedefond_menu,NULL,Surf_fenetre_menu,NULL);
 
     SDL_Rect position_txt_title ={(WIDTH-553)/2,20,0,0};
-    imagedefond_menu = SDL_LoadBMP("../ressources/img/title.bmp");
+    imagedefond_menu = SDL_LoadBMP("../../ressources/img/title.bmp");
     SDL_BlitSurface(imagedefond_menu, NULL, Surf_fenetre_menu,&position_txt_title);
 
+    SDL_Rect position_txt_option ={(WIDTH-50)/2,100,0,0};
+    message = TTF_RenderText_Solid( font1, "Option", textColorN);
+    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_option);
 
     SDL_UpdateWindowSurface(window_menu);
     
@@ -141,3 +165,4 @@ void SDL_ExitWithError(const char *message)
     SDL_Quit();
     exit(EXIT_FAILURE);
 }
+
