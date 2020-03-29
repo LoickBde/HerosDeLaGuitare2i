@@ -5,7 +5,8 @@ int main(int argc, char *argv[])
     SDL_Window *window = NULL; //Pointeur sur la fenêtre
     SDL_Renderer *renderer = NULL; //Pointeur sur le renderer
     SDL_Texture *texture_foreground, *texture_background = NULL; 
-    SDL_bool prgm_running = SDL_TRUE;  
+    SDL_bool prgm_running = SDL_TRUE; 
+    unsigned int frameLimit = 0; 
 
     initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
 
@@ -19,6 +20,10 @@ int main(int argc, char *argv[])
     setGameBoard(&renderer, texture_foreground, texture_background); //Mise en place de la zone de jeu
     SDL_RenderPresent(renderer); //Maj de l'affichage 
     
+    frameLimit = SDL_GetTicks() + FPS_LIMIT; 
+    SDL_limitFPS(frameLimit); 
+    frameLimit = SDL_GetTicks() + FPS_LIMIT; 
+
     while(prgm_running)
     {
         SDL_Event event; 

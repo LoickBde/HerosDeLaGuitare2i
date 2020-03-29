@@ -6,9 +6,12 @@
 
 #define WIDTH 800
 #define HEIGHT 450
+#define FPS 30
+#define FPS_LIMIT 1000/30
 
 void SDL_ExitWithError(const char *message); 
 void initSDLbasics(SDL_Window **window, SDL_Renderer **renderer, const char *windowTitle); 
 SDL_Texture *loadImage(SDL_Renderer *renderer, const char *path); 
 void drawGameBoard(SDL_Renderer *renderer); 
 void setGameBoard(SDL_Renderer **renderer, SDL_Texture *texture_foreground, SDL_Texture *texture_background); 
+void SDL_limitFPS(unsigned int limit); 

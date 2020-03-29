@@ -87,3 +87,17 @@ void setGameBoard(SDL_Renderer **renderer, SDL_Texture *texture_foreground, SDL_
     if(SDL_RenderCopy(*renderer, texture_foreground, NULL, NULL) != 0)
         SDL_ExitWithError("Erreur rendercopy");;  
 }
+
+//Permet de gérer les FPS
+void SDL_limitFPS(unsigned int limit)
+{
+    unsigned int ticks = SDL_GetTicks(); 
+
+    if(limit < ticks) //Retard
+        return; 
+    else if(limit > ticks + FPS_LIMIT) //Avance par rapport a la limit de fps
+        SDL_Delay(FPS_LIMIT);
+    else //Avance par rapport aux ticks
+        SDL_Delay(limit - ticks); 
+    return; 
+}
