@@ -4,7 +4,8 @@ rpi: main_rpi.exe
 
 #Options de compilation pour compiler SDL2
 #$(sdl2-config --cflags --libs) = -I/usr/include/SDL2 -D_REENTRANT -lSDL2
-CONF_OPT_UBU = -I/usr/include/SDL2 -D_REENTRANT -lSDL2
+#CONF_OPT_UBU = -I/usr/include/SDL2 -D_REENTRANT -lSDL2
+CONF_OPT_UBU=`sdl2-config --cflags --libs` 
 
 #Export du chemin du compilateur croisé de la rpi
 PATH_CC=../../tools-master/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin
