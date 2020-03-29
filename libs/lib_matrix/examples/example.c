@@ -4,7 +4,7 @@ int main(){
 	initSPI();
 	initMatrix();
 	drawGood();
-	delay(2);
+	sleep(2);
 	drawBad();
 	return 1;
 }

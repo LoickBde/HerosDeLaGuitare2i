@@ -6,12 +6,15 @@ CC=$(PATH_CC)/arm-linux-gnueabihf-gcc
 INC=-I$(DESTDIR)/include
 LIB=-L$(DESTDIR)/lib
 
-all:7segments
+all:example
 
-7segments : 7segments.c
-	$(CC) $(INC) $(LIB) 7segments.c -o 7segments -lwiringPI
+example : examples.c
+	$(CC) $(INC) $(LIB) examples.c -o example -lwiringPI
+	scp example pi@192.168.1.46:~
+	
 clean : 
 	rm -rf *.o
 	rm -rf example
 	rm -rf 7segments
+	rm -rf example
 	
