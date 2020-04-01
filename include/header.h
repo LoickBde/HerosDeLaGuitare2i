@@ -6,6 +6,7 @@
 
 #define WIDTH 800
 #define HEIGHT 450
-#define SPEED_MOVEMENT 30
+#define MUSIC_NOTE_SIZE 25
+#define SPEED_MOVEMENT 10
 #define FPS 30
 #define FPS_LIMIT 1000/30

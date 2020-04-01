@@ -107,6 +107,32 @@ void createGameBoard(SDL_Renderer *renderer, SDL_Texture *texture_foreground, SD
         SDL_ExitWithError("Erreur rendercopy");;  
 }
 
+void createMusicNote(SDL_Renderer *renderer, SDL_Texture **texture_musicNote) //Crée le modele du petit curseur mobile
+{
+    SDL_Rect musicNote = {0,0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Le carré a dessiner
+
+    *texture_musicNote = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
+                            SDL_TEXTUREACCESS_TARGET, MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE);
+    if(*texture_musicNote== NULL)
+        SDL_ExitWithError("Erreur création texture");
+
+    if(SDL_SetRenderTarget(renderer, *texture_musicNote) != 0) //Texture rendu cible 
+        SDL_ExitWithError("Erreur change render target");
+
+    if(SDL_SetRenderDrawColor(renderer,0,0,0, SDL_ALPHA_OPAQUE) != 0) //Nettoie la texture
+        SDL_ExitWithError("Erreur chgt couleur"); 
+    if(SDL_RenderClear(renderer) != 0)
+        SDL_ExitWithError("Erreur clear"); 
+
+    if(SDL_SetRenderDrawColor(renderer,255,255,255, SDL_ALPHA_OPAQUE) != 0) //Dessine le modele sur la texture
+        SDL_ExitWithError("Erreur chgt couleur"); 
+    if(SDL_RenderFillRect(renderer, &musicNote) != 0)
+        SDL_ExitWithError("Erreur dessin rectangle");
+
+     if(SDL_SetRenderTarget(renderer, NULL) != 0) //Renderer rendu cible 
+         SDL_ExitWithError("Erreur change render target");
+}
+
 //Permet de gérer les FPS
 void SDL_limitFPS(unsigned int limit)
 {
