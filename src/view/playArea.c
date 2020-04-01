@@ -4,25 +4,21 @@ int main(int argc, char *argv[])
 {
     SDL_Window *window = NULL; //Pointeur sur la fenêtre
     SDL_Renderer *renderer = NULL; //Pointeur sur le renderer
-    SDL_Texture *texture_foreground, *texture_background = NULL; 
+    SDL_Texture *texture_foreground, *texture_background, *texture_gameBoard = NULL; //Texture pour les cordes, l'image de fond et les deux en un
+    SDL_Texture *texture_cursor; //Texture contenant le curseur a déssiner
     SDL_bool prgm_running = SDL_TRUE; 
-    unsigned int frameLimit = 0; 
 
     initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
 
-    texture_foreground = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
-                            SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT);
-    if(texture_foreground == NULL)
-        SDL_ExitWithError("Erreur création texture");
-
-    texture_background = loadImage(renderer, "../ressources/img/fond_jeu.bmp");  //Charge l'image dans la texture
+    initTexturesGameBoard(renderer, &texture_foreground, &texture_background, &texture_gameBoard); 
     
-    setGameBoard(&renderer, texture_foreground, texture_background); //Mise en place de la zone de jeu
+    createGameBoard(renderer, texture_foreground, texture_background, &texture_gameBoard); //Mise en place de la zone de jeu
+    
     SDL_RenderPresent(renderer); //Maj de l'affichage 
     
-    frameLimit = SDL_GetTicks() + FPS_LIMIT; 
-    SDL_limitFPS(frameLimit); 
-    frameLimit = SDL_GetTicks() + FPS_LIMIT; 
+    SDL_DestroyTexture(texture_foreground); //Détruit les textures qui ne servent plus
+    SDL_DestroyTexture(texture_background); 
+
 
     while(prgm_running)
     {
@@ -40,8 +36,7 @@ int main(int argc, char *argv[])
         }
     }
     
-    SDL_DestroyTexture(texture_foreground); //Détruit les textures
-    SDL_DestroyTexture(texture_background); 
+    SDL_DestroyTexture(texture_gameBoard); //Détruit les textures restantes
     SDL_DestroyRenderer(renderer); //Detruit le render
     SDL_DestroyWindow(window); //Détruit la fenetre
     SDL_Quit(); //Quitte la sdl

@@ -23,7 +23,9 @@ void initSDLbasics(SDL_Window **window, SDL_Renderer **renderer, const char *win
     *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED); 
     if(*renderer == NULL)
         SDL_ExitWithError("Erreur création renderer");
-    SDL_RenderClear(*renderer);
+    
+    if(SDL_RenderClear(*renderer) != 0)
+        SDL_ExitWithError("Erreur renderer clear");
 }
 
 SDL_Texture *loadImage(SDL_Renderer *renderer, const char *path)
@@ -37,11 +39,23 @@ SDL_Texture *loadImage(SDL_Renderer *renderer, const char *path)
     texture_img = SDL_CreateTextureFromSurface(renderer, surface_img); //Crée une texture a partir de l'image = texture contenat l'image
     if(texture_img == NULL)
         SDL_ExitWithError("Erreur création texture à partir d'images"); 
-    SDL_FreeSurface(surface_img);
+    SDL_FreeSurface(surface_img); //On free la surface qui ne va plus nous servir pour la suite
 
     return texture_img; 
 }
 
+void initTexturesGameBoard(SDL_Renderer *renderer, SDL_Texture **texture_foreground, SDL_Texture **texture_background, SDL_Texture **texture_gameBoard)
+{
+    *texture_foreground = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
+                            SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT);
+    if(*texture_foreground == NULL)
+        SDL_ExitWithError("Erreur création texture");
+    *texture_background = loadImage(renderer, "../ressources/img/fond_jeu.bmp");  //Charge l'image dans la texture
+    *texture_gameBoard = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, 
+                            SDL_TEXTUREACCESS_TARGET, WIDTH, HEIGHT);
+    if(texture_gameBoard == NULL)
+        SDL_ExitWithError("Erreur création texture");
+}
 
 //Dessine le tableau de jeu
 void drawGameBoard(SDL_Renderer *renderer)
@@ -74,17 +88,22 @@ void drawGameBoard(SDL_Renderer *renderer)
     }
 }
 
-void setGameBoard(SDL_Renderer **renderer, SDL_Texture *texture_foreground, SDL_Texture *texture_background)
+void createGameBoard(SDL_Renderer *renderer, SDL_Texture *texture_foreground, SDL_Texture *texture_background, SDL_Texture **texture_gameBoard)
 {    
-    SDL_SetRenderTarget(*renderer, texture_foreground); //Texture rendu cible  
-    if(SDL_RenderClear(*renderer) != 0) //Clear le foreground
+    if(SDL_SetRenderTarget(renderer, texture_foreground) != 0) //Texture rendu cible 
+         SDL_ExitWithError("Erreur change render target");
+    if(SDL_RenderClear(renderer) != 0) //Clear le foreground
         SDL_ExitWithError("Erreur clear renderer");
-    if(SDL_RenderCopy(*renderer, texture_background, NULL, NULL) != 0)
+    if(SDL_RenderCopy(renderer, texture_background, NULL, NULL) != 0)
         SDL_ExitWithError("Erreur rendercopy");; 
-    drawGameBoard(*renderer);//Dessin sur la texture
-    if(SDL_SetRenderTarget(*renderer, NULL) != 0) // La cible de rendu est de nouveau le renderer
+    drawGameBoard(renderer);//Dessin sur la texture
+    if(SDL_SetRenderTarget(renderer, *texture_gameBoard) != 0) // La cible de rendu est la texture gameBoard
         SDL_ExitWithError("Erreur change render target"); 
-    if(SDL_RenderCopy(*renderer, texture_foreground, NULL, NULL) != 0)
+    if(SDL_RenderCopy(renderer, texture_foreground, NULL, NULL) != 0)
+        SDL_ExitWithError("Erreur rendercopy");;  
+    if(SDL_SetRenderTarget(renderer, NULL) != 0) // La cible de rendu est de nouveau le renderer
+        SDL_ExitWithError("Erreur change render target"); 
+    if(SDL_RenderCopy(renderer, *texture_gameBoard, NULL, NULL) != 0)
         SDL_ExitWithError("Erreur rendercopy");;  
 }
 
