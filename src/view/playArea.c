@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
         
         for(int i=0; i<10; i++)
         {
-            if(myRects[i].x <= WIDTH)
+            if(myRects[i].y <= HEIGHT)
             {
                 if(isFinished) //Gestion du flag facon ksos
                     isFinished = SDL_FALSE; 
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
                 if(SDL_RenderCopy(renderer, texture_musicNote, NULL, &myRects[i]) != 0)
                     SDL_ExitWithError("Pb render copy");
                 
-                myRects[i].x += SPEED_MOVEMENT; 
+                myRects[i].y += SPEED_MOVEMENT; 
             }
         }
 
@@ -90,11 +90,11 @@ int main(int argc, char *argv[])
 }
 
 void createTestRect(SDL_Rect myRects[]){ //Pour test, a supprimer
-    SDL_Rect rectTest = {10,10,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE};
+    SDL_Rect rectTest = {250-(MUSIC_NOTE_SIZE/2),0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE};
     for(int i=0; i<10; i++)
     {
         myRects[i] = rectTest;
-        rectTest.x = rectTest.x + 15; 
-        rectTest.y = rectTest.y + 30; 
+        //rectTest.x = rectTest.x + 15; 
+        rectTest.y = rectTest.y + 35; 
     }
 }
