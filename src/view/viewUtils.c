@@ -60,7 +60,7 @@ void initTexturesGameBoard(SDL_Renderer *renderer, SDL_Texture **texture_foregro
 //Dessine le tableau de jeu
 void drawGameBoard(SDL_Renderer *renderer)
 {
-    int nbDiv = 5; //NbStrings = nbDiv -1 
+    int nbDiv = NB_STRING+1;
     int sizeSide = 150; 
     int sizeBottom = 80; 
     int sizeGuitar = WIDTH - sizeSide*2; 
@@ -79,11 +79,14 @@ void drawGameBoard(SDL_Renderer *renderer)
         SDL_ExitWithError("Erreur dessin ligne ligne du bas");  
 
     //Dessine les cordes
+    int i = 0; 
     int currentX = sizeSide + sizeGap; 
     while(currentX < sizeGuitar+sizeSide)
     {      
         if(SDL_RenderDrawLine(renderer, currentX, 0, currentX, HEIGHT) != 0) //Chaque corde
             SDL_ExitWithError("Erreur dessin cordes guitare");
+        stringPosition[i]=currentX; 
+        i++; 
         currentX+= sizeGap; 
     }
 }

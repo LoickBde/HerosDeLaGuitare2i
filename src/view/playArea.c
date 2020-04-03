@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     SDL_Texture *texture_foreground, *texture_background, *texture_gameBoard = NULL; //Texture pour les cordes, l'image de fond et les deux en un
     SDL_Texture *texture_musicNote; //Texture contenant le curseur a déssiner
     SDL_bool prgm_running = SDL_TRUE; 
-    SDL_Rect myRects[10];  //Pour test, a supprimer
+    SDL_Rect myRects[NB_NOTE];  //Pour test, a supprimer
 
     initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
 
@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     createMusicNote(renderer, &texture_musicNote); //Crée la texture modèle a copié pour les notes
 
     //---- TEST ----//
-    SDL_Rect dest = {10,10,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Rectangle de destination pour les notes (un pour un)
     unsigned int frameLimit; 
     SDL_bool isFinished = SDL_FALSE; 
 
@@ -44,7 +43,7 @@ int main(int argc, char *argv[])
         
         isFinished = SDL_TRUE; 
         
-        for(int i=0; i<10; i++)
+        for(int i=0; i<NB_NOTE; i++)
         {
             if(myRects[i].y <= HEIGHT)
             {
@@ -62,7 +61,6 @@ int main(int argc, char *argv[])
         SDL_RenderPresent(renderer); 
         frameLimit = SDL_GetTicks() + FPS_LIMIT;
     }
-
     //---- TEST ----//
     
     while(prgm_running)
@@ -90,11 +88,18 @@ int main(int argc, char *argv[])
 }
 
 void createTestRect(SDL_Rect myRects[]){ //Pour test, a supprimer
-    SDL_Rect rectTest = {250-(MUSIC_NOTE_SIZE/2),0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE};
-    for(int i=0; i<10; i++)
+    SDL_Rect rectTest = {0,0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Initialise la zone a dessiner
+    int currentString = 0; //Permet de stocker au bon endroit
+
+    for(int i=0; i<NB_STRING; i++) //Pour chaque corde on veut NB_NOTE_STRING de note
     {
-        myRects[i] = rectTest;
-        //rectTest.x = rectTest.x + 15; 
-        rectTest.y = rectTest.y + 35; 
+        rectTest.x = stringPosition[i]-(MUSIC_NOTE_SIZE/2); //On donne la position de la corde en x 
+        rectTest.y = 0; //Position en y de la note sur la corde
+        for(int j=0; j<NB_NOTE_STRING; j++) //X notes par corde
+        {
+            myRects[currentString] = rectTest;
+            rectTest.y = rectTest.y + 35; 
+            currentString++; 
+        }
     }
 }

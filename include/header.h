@@ -6,6 +6,9 @@
 
 #define WIDTH 800
 #define HEIGHT 450
+#define NB_STRING 4
+#define NB_NOTE_STRING 8 
+#define NB_NOTE 32 //NB_STRING * NB_NOTE_STRING
 #define MUSIC_NOTE_SIZE 25
 #define SPEED_MOVEMENT 2
 #define FPS 30

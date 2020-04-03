@@ -1,5 +1,7 @@
 #include "../../include/header.h"
 
+int stringPosition[NB_STRING]; 
+
 void SDL_ExitWithError(const char *message); 
 void initSDLbasics(SDL_Window **window, SDL_Renderer **renderer, const char *windowTitle); 
 SDL_Texture *loadImage(SDL_Renderer *renderer, const char *path); 
