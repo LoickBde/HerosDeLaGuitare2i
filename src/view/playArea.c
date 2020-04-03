@@ -43,13 +43,13 @@ int main(int argc, char *argv[])
                 {
                     case SDL_SCANCODE_S:
                         puts("S appuyé");
-                    break;
+                        break;
                     case SDL_SCANCODE_D:
                         puts("D appuyé");
-                    break;
+                        break;
                     case SDL_SCANCODE_F:
                         puts("F appuyé");
-                    break;
+                        break;
                     case SDL_SCANCODE_G:
                         puts("G appuyé"); 
                         break;
