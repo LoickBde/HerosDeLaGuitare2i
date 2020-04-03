@@ -1,6 +1,5 @@
 #include "viewUtils.h" 
 
-
 int main(int argc, char *argv[])
 {
     SDL_Window *window = NULL; //Pointeur sur la fenêtre
@@ -36,13 +35,25 @@ int main(int argc, char *argv[])
         SDL_Event event; 
         while(SDL_PollEvent(&event))
         {
-            switch(event.type)
+            if(event.type == SDL_QUIT)
+                prgm_running = SDL_FALSE; 
+            else if(event.type == SDL_KEYDOWN)
             {
-                case SDL_QUIT : 
-                    prgm_running = SDL_FALSE; 
-                    break; 
-                default :
-                    break; 
+                switch (event.key.keysym.scancode)
+                {
+                    case SDL_SCANCODE_S:
+                        puts("S appuyé");
+                    break;
+                    case SDL_SCANCODE_D:
+                        puts("D appuyé");
+                    break;
+                    case SDL_SCANCODE_F:
+                        puts("F appuyé");
+                    break;
+                    case SDL_SCANCODE_G:
+                        puts("G appuyé"); 
+                        break;
+                }
             }
         }
         
