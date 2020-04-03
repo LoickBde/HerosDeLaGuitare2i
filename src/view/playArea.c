@@ -37,21 +37,21 @@ int main(int argc, char *argv[])
         {
             if(event.type == SDL_QUIT)
                 prgm_running = SDL_FALSE; 
-            else if(event.type == SDL_KEYDOWN)
+            else if(event.type == SDL_KEYDOWN && event.key.repeat == 0) //Clavier et empecher la repition 
             {
                 switch (event.key.keysym.scancode)
                 {
                     case SDL_SCANCODE_S:
-                        puts("S appuyé");
+                        checkNoteArea(stringPosition[0], myRects); //Corde 1
                         break;
                     case SDL_SCANCODE_D:
-                        puts("D appuyé");
+                        checkNoteArea(stringPosition[1], myRects); //Corde 2
                         break;
                     case SDL_SCANCODE_F:
-                        puts("F appuyé");
+                        checkNoteArea(stringPosition[2], myRects); //Corde 3 
                         break;
                     case SDL_SCANCODE_G:
-                        puts("G appuyé"); 
+                        checkNoteArea(stringPosition[3], myRects); //Corde 4
                         break;
                 }
             }

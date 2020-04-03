@@ -6,6 +6,8 @@
 
 #define WIDTH 800
 #define HEIGHT 450
+#define SIZE_SIDE 150
+#define SIZE_BOT 80
 #define NB_STRING 4
 #define NB_NOTE_STRING 2 
 #define NB_NOTE 8 //NB_STRING * NB_NOTE_STRING
