@@ -215,16 +215,38 @@ void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Textu
     frameLimit = SDL_GetTicks() + FPS_LIMIT; //Fps synchro
 }
 
+//Permet de savoir si la note est dans la bonne zone pour la valider (a optimiser)
 void checkNoteArea(int cooX, SDL_Rect myRects[])
 {
-    SDL_Rect area = {cooX-(MUSIC_NOTE_SIZE/2), SIZE_BOT-(MUSIC_NOTE_SIZE/2), MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Crée un rectangle de la bonne taille au bon endroit
+    SDL_Rect area = {cooX-(MUSIC_NOTE_SIZE/2), HEIGHT-SIZE_BOT-(MUSIC_NOTE_SIZE/2), MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Crée un rectangle de la bonne taille au bon endroit
+    SDL_Rect closestNote = {-1, 0, 0, 0}; //Init d'un rectangle qui permet de sauvegarder la note la plus proche
+    SDL_Rect intersectZone = {0,0,0,0}; 
+    int closestNoteIndex = -1; 
 
-    for(int i=0; i<NB_NOTE; i++)
+    for(int i=0; i<NB_NOTE; i++) //Pour toute les notes
     {
-        if(myRects[i].x == cooX-(MUSIC_NOTE_SIZE/2))
+        if(myRects[i].x == cooX-(MUSIC_NOTE_SIZE/2) && myRects[i].y+MUSIC_NOTE_SIZE > 0 && myRects[i].y < HEIGHT) //Si sur la bonne corde, et dans l'écran
         {
-            puts("YES"); 
+            if(closestNote.x == -1 || closestNote.y < myRects[i].y)
+            {
+                closestNote = myRects[i]; //On garde la note la plus proche
+                closestNoteIndex = i; //Et son index
+            }
         }
     }
 
+    if(SDL_IntersectRect(&area, &closestNote, &intersectZone) && closestNote.y+MUSIC_NOTE_SIZE >= HEIGHT-SIZE_BOT) //On check si la note est dans la zone
+    {
+        if(intersectZone.h >= 20)
+            printf("Taille d'intersection: %d. Parfait !\n", intersectZone.h); 
+        else
+        {
+            printf("Taille d'intersection: %d. Bien !\n", intersectZone.h); 
+        }
+    }
+    else 
+        printf("Taille d'intersection: 0. Raté !\n");
+    
+    if(closestNoteIndex != -1) //Permet de ne plus afficher la note jouée
+        myRects[closestNoteIndex].y = HEIGHT + 1;
 } 
