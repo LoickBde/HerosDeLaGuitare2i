@@ -10,3 +10,5 @@ void drawGameBoard(SDL_Renderer *renderer);
 void createGameBoard(SDL_Renderer *renderer, SDL_Texture *texture_foreground, SDL_Texture *texture_background, SDL_Texture **texture_gameBoard); 
 void createMusicNote(SDL_Renderer *renderer, SDL_Texture **texture_musicNote); 
 void SDL_limitFPS(unsigned int limit); 
+void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Texture *texture_musicNote, SDL_Rect myRects[], SDL_bool *songFinished); 
+void initNotesTest(SDL_Rect myRects[]); 

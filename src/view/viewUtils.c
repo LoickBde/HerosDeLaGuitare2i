@@ -149,3 +149,70 @@ void SDL_limitFPS(unsigned int limit)
         SDL_Delay(limit - ticks); 
     return; 
 }
+
+//Permet de gérer le définlement des notes 
+void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Texture *texture_musicNote, SDL_Rect myRects[], SDL_bool *songFinished)
+{
+    unsigned int frameLimit; //Pour les fps, synchro
+
+    frameLimit = SDL_GetTicks() + FPS_LIMIT; //Limites pour fps
+
+    if(SDL_RenderClear(renderer) != 0)  //Nettoie le render
+            SDL_ExitWithError("Pb render clear"); 
+    if(SDL_RenderCopy(renderer, texture_gameBoard, NULL, NULL) != 0) //Copie le plateau de jeu
+            SDL_ExitWithError("Pb render copy");
+    
+    *songFinished = SDL_TRUE; //Flag
+    
+    for(int i=0; i<NB_NOTE; i++) //Pour toutes les notes
+    {
+        if(myRects[i].y <= HEIGHT) //On regarde si elles valent le coup d'etre affichée
+        {
+            if(*songFinished) //Gestion du flag 
+                *songFinished = SDL_FALSE; 
+
+            if(SDL_RenderCopy(renderer, texture_musicNote, NULL, &myRects[i]) != 0) //Si oui on copie 
+                SDL_ExitWithError("Pb render copy");
+            
+            myRects[i].y += SPEED_MOVEMENT; //On modifie la coordonnée
+        }
+    }
+
+    SDL_limitFPS(frameLimit); //Limitation des fps
+    
+    SDL_RenderPresent(renderer); //On actualise
+    
+    frameLimit = SDL_GetTicks() + FPS_LIMIT; //Fps synchro
+}
+
+//Pour initialiser les notes
+void initNotesTest(SDL_Rect myRects[]){ //Pour test, a supprimer
+    SDL_Rect rectTest = {0,0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Initialise la zone a dessiner
+    int currentString = 0; //Permet de stocker au bon endroit
+
+    //Version chargement corde par corde
+   /*  for(int i=0; i<NB_STRING; i++) //Pour chaque corde on veut NB_NOTE_STRING de note
+    {
+        rectTest.x = stringPosition[i]-(MUSIC_NOTE_SIZE/2); //On donne la position de la corde en x 
+        rectTest.y = -150; //Position en y de la note sur la corde
+        for(int j=0; j<NB_NOTE_STRING; j++) //X notes par corde
+        {
+            myRects[currentString] = rectTest;
+            rectTest.y = rectTest.y + 50; 
+            currentString++; 
+        }
+    } */
+
+    //Chargement chronolologie verticale
+    rectTest.y = -150; //Position en y de la note sur la corde
+    for(int j=0; j<NB_NOTE_STRING; j++) //X notes par corde
+    {
+        for(int i=0; i<NB_STRING; i++) //Pour chaque corde on veut NB_NOTE_STRING de note
+        {
+            rectTest.x = stringPosition[i]-(MUSIC_NOTE_SIZE/2); //On donne la position de la corde en x 
+            myRects[currentString] = rectTest;
+            rectTest.y = rectTest.y + 50; 
+            currentString++; 
+        }
+    }
+}
