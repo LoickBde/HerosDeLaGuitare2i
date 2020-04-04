@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     createMusicNote(renderer, &texture_musicNote); //Crée la texture modèle a copié pour les notes
 
     initNotesTest(myRects); //Initialise le placement des notes
+    score = 0; //Initialise le score 
 
     if(SDL_SetRenderTarget(renderer, NULL) != 0) //Renderer rendu cible 
          SDL_ExitWithError("Erreur change render target");

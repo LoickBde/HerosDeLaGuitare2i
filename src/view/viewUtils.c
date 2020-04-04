@@ -238,15 +238,29 @@ void checkNoteArea(int cooX, SDL_Rect myRects[])
     if(SDL_IntersectRect(&area, &closestNote, &intersectZone) && closestNote.y+MUSIC_NOTE_SIZE >= HEIGHT-SIZE_BOT) //On check si la note est dans la zone
     {
         if(intersectZone.h >= 20)
+        {
             printf("Taille d'intersection: %d. Parfait !\n", intersectZone.h); 
+            updateScore(intersectZone.h); 
+            printf("Score : %d\n", score); 
+        }
         else
         {
             printf("Taille d'intersection: %d. Bien !\n", intersectZone.h); 
+            updateScore(intersectZone.h); 
+            printf("Score : %d\n", score); 
         }
     }
     else 
+    {
         printf("Taille d'intersection: 0. Raté !\n");
+        printf("Score : %d\n", score); 
+    }
     
     if(closestNoteIndex != -1) //Permet de ne plus afficher la note jouée
         myRects[closestNoteIndex].y = HEIGHT + 1;
 } 
+
+void updateScore(int points)
+{
+    score += points*4; 
+}

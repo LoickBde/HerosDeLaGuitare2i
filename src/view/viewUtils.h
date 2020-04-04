@@ -1,6 +1,7 @@
 #include "../../include/header.h"
 
 int stringPosition[NB_STRING]; 
+int score; 
 
 void SDL_ExitWithError(const char *message); 
 void initSDLbasics(SDL_Window **window, SDL_Renderer **renderer, const char *windowTitle); 
@@ -13,3 +14,4 @@ void SDL_limitFPS(unsigned int limit);
 void initNotesTest(SDL_Rect myRects[]); 
 void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Texture *texture_musicNote, SDL_Rect myRects[], SDL_bool *songFinished); 
 void checkNoteArea(int cooX, SDL_Rect myRects[]); 
+void updateScore(int points); 
