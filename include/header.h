@@ -15,3 +15,4 @@
 #define SPEED_MOVEMENT 2
 #define FPS 30
 #define FPS_LIMIT 1000/30
+#define MAX_BUFF 255

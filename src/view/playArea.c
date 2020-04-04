@@ -10,6 +10,12 @@ int main(int argc, char *argv[])
     SDL_bool songFinished = SDL_FALSE; 
     SDL_Rect myRects[NB_NOTE];  //Pour test, a supprimer
 
+    if(argc != 2) //Si il n'y ai pas le chemin du fichier de la musique
+    {
+        puts("Veuillez spécifier la musique à jouer"); 
+        return EXIT_FAILURE; 
+    }
+
     initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
 
     initTexturesGameBoard(renderer, &texture_foreground, &texture_background, &texture_gameBoard); 
@@ -23,7 +29,8 @@ int main(int argc, char *argv[])
 
     createMusicNote(renderer, &texture_musicNote); //Crée la texture modèle a copié pour les notes
 
-    initNotesTest(myRects); //Initialise le placement des notes
+   // initNotesTest(myRects); //Initialise le placement des notes version test
+    initNotesFromFile(argv[1], myRects); //Initialise le placement des notes depuis un fichier txt
     score = 0; //Initialise le score 
 
     if(SDL_SetRenderTarget(renderer, NULL) != 0) //Renderer rendu cible 

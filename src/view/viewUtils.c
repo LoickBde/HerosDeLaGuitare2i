@@ -180,6 +180,36 @@ void initNotesTest(SDL_Rect myRects[]){ //Pour test, a supprimer
     }
 }
 
+//Initialise les notes a partir d'un fichier texte passé en argument
+void initNotesFromFile(const char* path, SDL_Rect myRects[])
+{
+    SDL_Rect rectToDraw = {0,0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Initialise la zone a dessiner
+    FILE *fic = fopen(path, "r");
+    char line[MAX_BUFF];  
+    int flag = 0, i=0; 
+
+    if(fic == NULL)
+        SDL_ExitWithError("Impossible d'ouvrir le fichier de musique"); 
+    
+    while (fgets (line, MAX_BUFF, fic) != NULL ) //Ligne par ligne
+    {
+        if(!flag)
+        {
+            rectToDraw.x = stringPosition[atoi(line)-1]-(MUSIC_NOTE_SIZE/2); //On donne la position de la corde en x 
+            flag=1; 
+        }
+        else
+        {
+            rectToDraw.y = atoi(line); 
+            myRects[i]= rectToDraw; 
+            i++; 
+            flag=0; 
+        }
+        
+    }
+    fclose(fic); 
+}
+
 //Permet de gérer le définlement des notes 
 void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Texture *texture_musicNote, SDL_Rect myRects[], SDL_bool *songFinished)
 {
