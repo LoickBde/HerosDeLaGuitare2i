@@ -1,2 +1,2 @@
 # HerosDeLaGuitare2i
-Guitar Hero en utilisant le Joy-Pi
+Développement d'un jeu type GuitarHero en C, en utilisant SDL ainsi que la malette JoyPi.
