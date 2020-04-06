@@ -9,8 +9,8 @@ LIB=-L$(DESTDIR)/lib
 all:example
 
 example : examples.c
-	$(CC) $(INC) $(LIB) examples.c -o segments -lwiringPI -lsegments
-	scp segments pi@192.168.1.46:~/HerosDeLaGuitare2i/examples/
+	$(CC) $(INC) $(LIB) examples.c -o ../../../bin/segments -lwiringPI -lsegments
+	scp ../../../bin/segments pi@192.168.1.46:~/HerosDeLaGuitare2i/examples/
 	
 clean : 
 	rm -rf *.o
