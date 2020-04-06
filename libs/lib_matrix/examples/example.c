@@ -6,6 +6,8 @@ int main(){
 	drawGood();
 	sleep(2);
 	drawBad();
+	sleep(2);
+	turnOffMatrix();
 	return 1;
 }
 

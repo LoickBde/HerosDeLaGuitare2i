@@ -68,3 +68,7 @@ void drawGood(){
 void drawBad(){
 	drawMatrix(bad);
 }
+
+void turnOffMatrix(){
+	writeMatrix(0x0C,0);
+}
