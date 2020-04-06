@@ -10,7 +10,7 @@ all:example
 
 example : example.c
 	$(CC) $(INC) $(LIB) example.c -o ../../../bin/tone -lwiringPI -lpthread -lmusic
-	scp ../../../bin/tone pi@192.168.1.46:~/HerosDeLaGuitare2i/examples/
+	scp ../../../bin/tone pi@192.168.1.46:~
 	
 clean : 
 	rm -rf *.o
