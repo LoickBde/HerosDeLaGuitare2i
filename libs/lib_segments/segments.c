@@ -1,4 +1,23 @@
-#include "segments.h"
+#include <segments.h>
+
+const uint8_t seg_numbers[] = { 
+	0x3F, /* 0 */ 
+	0x06, /* 1 */ 
+	0x5B, /* 2 */ 
+	0x4F, /* 3 */ 
+	0x66, /* 4 */ 
+	0x6D, /* 5 */ 
+	0x7D, /* 6 */ 
+	0x07, /* 7 */ 
+	0x7F, /* 8 */ 
+	0x6F, /* 9 */ 
+	0x77, /* a */ 
+	0x7C, /* b */ 
+	0x39, /* C */ 
+	0x5E, /* d */ 
+	0x79, /* E */ 
+	0x71, /* F */ 
+}; 
 
 void initSegments(){
     // CHECK(wiringPiI2CSetup(SEG_ADDRESS),"Erreur init bus I2C"); //Init bus I2C
@@ -21,9 +40,9 @@ void turnOffSegments(){
 }
 
 void test(){
-    CHECK(wiringPiI2CWriteReg8(fd, 0x00, number[10]),"Erreur disp"); //Blinking off + display on 
-    CHECK(wiringPiI2CWriteReg8(fd, 0x02, number[5]),"Erreur disp"); //Blinking off + display on 
-    CHECK(wiringPiI2CWriteReg8(fd, 0x06, number[5]),"Erreur disp"); //Blinking off + display on
+    CHECK(wiringPiI2CWriteReg8(fd, 0x00, seg_numbers[10]),"Erreur disp"); //Blinking off + display on 
+    CHECK(wiringPiI2CWriteReg8(fd, 0x02, seg_numbers[5]),"Erreur disp"); //Blinking off + display on 
+    CHECK(wiringPiI2CWriteReg8(fd, 0x06, seg_numbers[5]),"Erreur disp"); //Blinking off + display on
     CHECK(wiringPiI2CWriteReg8(fd, 0x08, 0),"Erreur disp"); //Blinking off + display on
 }
 
@@ -40,7 +59,7 @@ void writeScore(int score){
 }
 
 void writeSegment(int digit, int num){
-    CHECK(wiringPiI2CWriteReg8(fd, digit, number[num]),"Erreur disp"); //Blinking off + display on 
+    CHECK(wiringPiI2CWriteReg8(fd, digit, seg_numbers[num]),"Erreur disp"); //Blinking off + display on 
 }
 
 

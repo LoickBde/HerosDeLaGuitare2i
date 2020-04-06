@@ -1,4 +1,4 @@
-#include "../matrix.c"
+#include <matrix.h>
 
 int main(){
 	initSPI();

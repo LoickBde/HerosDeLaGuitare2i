@@ -1,4 +1,4 @@
-#include "../segments.c"
+#include <segments.h>
 
 int main(){
     initSegments();

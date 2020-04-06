@@ -1,4 +1,4 @@
-#include "../music.c"
+#include <music.h>
 
 int main(){
     initMusic();
