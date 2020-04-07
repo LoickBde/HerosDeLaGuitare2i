@@ -12,23 +12,23 @@ void setBPM(int bpm){
 }
 
 void playNote(Note note, Rythme rythme){
-    printf("Note : %d\n",note);
+    //printf("Note : %d\n",note);
     softToneWrite(BUZZER_PIN, note);
-    printf("time : %d\n",time);
+    //printf("time : %d\n",time);
     delay(time*rythme);
     softToneWrite(BUZZER_PIN,0);
     delay(time*rythme/30);
 }
 
-void playScale(){  
-    playNote(DO,BLANCHE);
-    playNote(REb,BLANCHE);
-    playNote(MI,BLANCHE);
-    playNote(FA,BLANCHE);
-    playNote(SOLb,BLANCHE);
-    playNote(SOL,BLANCHE);
-    playNote(LAb,BLANCHE);
-    playNote(LA,BLANCHE);
-    playNote(SIb,BLANCHE);
-    playNote(SI,BLANCHE);
+void playScale(){   
+    playNote(DO,NOIRE);
+    playNote(REb,NOIRE);
+    playNote(MI,NOIRE);
+    playNote(FA,NOIRE);
+    playNote(SOLb,NOIRE);
+    playNote(SOL,NOIRE);
+    playNote(LAb,NOIRE);
+    playNote(LA,NOIRE);
+    playNote(SIb,NOIRE);
+    playNote(SI,NOIRE);
 }
