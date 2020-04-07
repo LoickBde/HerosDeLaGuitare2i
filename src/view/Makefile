@@ -17,20 +17,23 @@ INC=-I$(DESTDIR)/include/SDL2
 LIB=-L$(DESTDIR)/lib
 OTHERS=-D_REENTRANT -lSDL2
 
-main.exe: main.c
-	gcc -Wall -Wextra -L.\lib -I.\include ./main.c -o main.exe -lSDL2main -lSDL2 -lSDL2_ttf
+main.exe: main.c playArea.o viewUtils.o
+	gcc -Wall -Wextra -L.\lib -I.\include ./main.c playArea.o viewUtils.o -o main.exe -lSDL2main -lSDL2 -lSDL2_ttf
 	mv main.exe ../../bin/
 
 main_rpi.exe: main.c
-	$(CC) $(INC) $(LIB) $(OTHERS) main.c -o main_rpi.exe
+	$(CC) -Wall -Wextra -L.\lib -I.\include main.c playArea.o viewUtils.o -o main_rpi.exe -lSDL2main -lSDL2 -lSDL2_ttf
 	mv main_rpi.exe ../../bin/
 
 playArea.exe: playArea.c viewUtils.o
 	gcc playArea.c viewUtils.o $(CONF_OPT_UBU) -o playArea.exe
 	mv playArea.exe ../../bin/
 
+playArea.o: playArea.c viewUtils.o
+	gcc playArea.c $(CONF_OPT_UBU) -c
+
 viewUtils.o: viewUtils.c
-	gcc -c viewUtils.c
+	gcc viewUtils.c -c
 
 clean: 
 	rm -rf *.o 

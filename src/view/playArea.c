@@ -1,6 +1,6 @@
 #include "viewUtils.h" 
 
-int main(int argc, char *argv[])
+int ZoneJeu(char path[1][40])
 {
     SDL_Window *window = NULL; //Pointeur sur la fenêtre
     SDL_Renderer *renderer = NULL; //Pointeur sur le renderer
@@ -10,11 +10,6 @@ int main(int argc, char *argv[])
     SDL_bool songFinished = SDL_FALSE; 
     SDL_Rect myRects[NB_NOTE];  //Pour test, a supprimer
 
-    if(argc != 2) //Si il n'y ai pas le chemin du fichier de la musique
-    {
-        puts("Veuillez spécifier la musique à jouer"); 
-        return EXIT_FAILURE; 
-    }
 
     initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
 
@@ -30,7 +25,9 @@ int main(int argc, char *argv[])
     createMusicNote(renderer, &texture_musicNote); //Crée la texture modèle a copié pour les notes
 
    // initNotesTest(myRects); //Initialise le placement des notes version test
-    initNotesFromFile(argv[1], myRects); //Initialise le placement des notes depuis un fichier txt
+    printf("TEST\n");
+    printf("%s\n",path[0] );
+    initNotesFromFile(path[0], myRects); //Initialise le placement des notes depuis un fichier txt
     score = 0; //Initialise le score 
 
     if(SDL_SetRenderTarget(renderer, NULL) != 0) //Renderer rendu cible 
