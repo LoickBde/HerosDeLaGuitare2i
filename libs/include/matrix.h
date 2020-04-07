@@ -1,27 +1,12 @@
 #include "../include/header.h"
-#include <wiringPi.h>
 #include <wiringPiSPI.h>
 
 #define	SPI_CHANNEL	1 //deux channel 0 ou 1
 #define	SPI_SPEED	1000000 //vitesse d'horloge du SPI
 
-char test[] = { 
-	0b11111111,
-	0b00000000,
-	0b00000000,
-	0b00000000,
-	0b00000000,
-	0b00000000,
-	0b00000000,
-	0b00000000
-};
+extern char good[];
 
-char good[] = {0x3C,0x42,0xA5,0x81,0xA5,0x99,0x42,0x3C};
-
-
-char bad[] = {0x3C,0x42,0xA5,0x81,0x99,0xA5,0x42,0x3C};
-
-
+extern char bad[];
 
 void initSPI(void); //fonction d'initialisation du bus SPI
 
@@ -41,3 +26,5 @@ void drawTest();
 void drawGood();
 
 void drawBad();
+
+void turnOffMatrix();

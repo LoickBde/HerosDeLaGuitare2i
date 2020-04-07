@@ -8,11 +8,11 @@ LIB=-L$(DESTDIR)/lib
 
 all:example
 
-example : example.c
-	$(CC) $(INC) $(LIB) example.c -o ../../../bin/matrix -lwiringPI -lmatrix
-	scp ../../../bin/matrix pi@192.168.1.46:~
-
+example : examples.c
+	$(CC) $(INC) $(LIB) examples.c -o ../../../bin/segments -lwiringPI -lsegments
+	scp ../../../bin/segments pi@192.168.1.46:~
+	
 clean : 
 	rm -rf *.o
-	rm -rf matrix
+	rm -rf segments
 	

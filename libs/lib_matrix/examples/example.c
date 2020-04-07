@@ -1,11 +1,13 @@
-#include "../matrix.c"
+#include <matrix.h>
 
 int main(){
 	initSPI();
 	initMatrix();
 	drawGood();
-	delay(2);
+	sleep(2);
 	drawBad();
+	sleep(2);
+	turnOffMatrix();
 	return 1;
 }
 
