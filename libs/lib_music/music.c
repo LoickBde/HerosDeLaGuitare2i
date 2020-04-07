@@ -6,8 +6,8 @@ void initMusic(){
 }
 
 void setBPM(int bpm){
-    printf("BPM: %d\n",bpm);
-    printf("1 temps = %d ms\n",(int) (60000/bpm));
+    // printf("BPM: %d\n",bpm);
+    //printf("1 temps = %d ms\n",(int) (60000/bpm));
     time =  (int) 60000/bpm;
 }
 
@@ -17,6 +17,7 @@ void playNote(Note note, Rythme rythme){
     printf("time : %d\n",time);
     delay(time*rythme);
     softToneWrite(BUZZER_PIN,0);
+    delay(time*rythme/30);
 }
 
 void playScale(){  

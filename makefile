@@ -1,4 +1,4 @@
-all:
+all: library
 
 examples: 
 	cd libs/lib_segments/examples && $(MAKE)
