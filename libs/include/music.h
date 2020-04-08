@@ -19,10 +19,12 @@ typedef enum Note{
 } Note;
 
 typedef enum Rythme{
-    RONDE = 4,
-    BLANCHEP = 3,
-    BLANCHE = 2,
-    NOIRE = 1
+    RONDE = 400,
+    BLANCHEP = 300,
+    BLANCHE = 200, //BLANCHE = 2 temps = 200% le temps unitaire
+    NOIRE = 100, //Noire = 1 temps = 100%
+    CROCHE = 50, //Croche = 50% d'un temps unitaire
+    DOUBLE_CROCHE = 25 //Double croche = 1/4 de temps = 25% du temps unitaire
 } Rythme;
 
 int time; //La durée d'un temps dans une mesure (= 60/bpm ms)

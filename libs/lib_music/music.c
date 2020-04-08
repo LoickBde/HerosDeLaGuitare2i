@@ -15,9 +15,9 @@ void playNote(Note note, Rythme rythme){
     //printf("Note : %d\n",note);
     softToneWrite(BUZZER_PIN, note);
     //printf("time : %d\n",time);
-    delay(time*rythme);
+    delay(time*(rythme/100));
     softToneWrite(BUZZER_PIN,0);
-    delay(time*rythme/30);
+    delay(time*(rythme/100)/30);
 }
 
 void playScale(){   

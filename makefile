@@ -9,7 +9,7 @@ rpi : library
 ubuntu : library
 	cd src/view && $(MAKE) ubuntu
 
-examples: 
+examples: library
 	cd libs/lib_segments/examples && $(MAKE)
 	cd libs/lib_matrix/examples && $(MAKE)
 	cd libs/lib_music/examples && $(MAKE)
