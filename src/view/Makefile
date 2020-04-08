@@ -21,19 +21,19 @@ main.exe: main.c playArea.o viewUtils.o
 	gcc -Wall -Wextra -L.\lib -I.\include ./main.c playArea.o viewUtils.o -o ../../bin/main.exe -lSDL2main -lSDL2 -lSDL2_ttf
 
 main_rpi.exe: main.c playAreaRpi.o viewUtilsRpi.o
-	$(CC) $(INC) $(LIB) -Wall -Wextra main.c playArea.o viewUtils.o -o ../../bin/main_rpi.exe -lSDL2main -lSDL2 -lSDL2_ttf -lmatrix -lsegments -lmusic
+	$(CC) $(INC) $(LIB) -D_RPI-Wall -Wextra main.c playArea.o viewUtils.o -o ../../bin/main_rpi.exe -lSDL2main -lSDL2 -lSDL2_ttf -lmatrix -lsegments -lmusic
 
 playArea.o: playArea.c
 	gcc playArea.c $(CONF_OPT_UBU) -c
 
 playAreaRpi.o: playArea.c 
-	$(CC) $(INC) $(LIB) playArea.c $(OPT) -c
+	$(CC) $(INC) $(LIB) -D_RPI playArea.c $(OPT) -c
 
 viewUtils.o: viewUtils.c
 	gcc viewUtils.c -c
 
 viewUtilsRpi.o: viewUtils.c
-	$(CC) $(INC) $(LIB) $(OPT) viewUtils.c -c
+	$(CC) $(INC) $(LIB) $(OPT) -D_RPI viewUtils.c -c
 
 clean: 
 	rm -rf *.o 
