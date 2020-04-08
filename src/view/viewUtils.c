@@ -271,11 +271,13 @@ void checkNoteArea(int cooX, SDL_Rect myRects[])
         {
             printf("Taille d'intersection: %d. Parfait !\n", intersectZone.h); 
             updateScore(intersectZone.h); 
+            drawGood();
             printf("Score : %d\n", score); 
         }
         else
         {
             printf("Taille d'intersection: %d. Bien !\n", intersectZone.h); 
+            drawGood();
             updateScore(intersectZone.h); 
             printf("Score : %d\n", score); 
         }
@@ -283,6 +285,7 @@ void checkNoteArea(int cooX, SDL_Rect myRects[])
     else 
     {
         printf("Taille d'intersection: 0. Raté !\n");
+        drawBad();
         printf("Score : %d\n", score); 
     }
     
@@ -292,5 +295,6 @@ void checkNoteArea(int cooX, SDL_Rect myRects[])
 
 void updateScore(int points)
 {
-    score += points*4; 
+    score += points*4;
+    writeScore(score); 
 }

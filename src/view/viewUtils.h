@@ -1,4 +1,7 @@
 #include "../../include/header.h"
+#include <music.h>
+#include <segments.h>
+#include <matrix.h>
 
 int stringPosition[NB_STRING]; 
 int score; 
