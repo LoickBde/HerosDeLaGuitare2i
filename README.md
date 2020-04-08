@@ -28,7 +28,7 @@ make rpi
 
 ## Exemples 
 
-Pour compiler et transferer les examples fournis avec les libs (mdp de pi: pi) :
+Pour compiler et transferer les examples fournis avec les libs :
 
 ```bash
 make examples
