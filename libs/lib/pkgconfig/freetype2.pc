@@ -1,0 +1,14 @@
+prefix=/home/nathan/Bureau/HerosDeLaGuitare2i/libs
+exec_prefix=/home/nathan/Bureau/HerosDeLaGuitare2i/libs
+libdir=/home/nathan/Bureau/HerosDeLaGuitare2i/libs/lib
+includedir=/home/nathan/Bureau/HerosDeLaGuitare2i/libs/include
+
+Name: FreeType 2
+URL: https://freetype.org
+Description: A free, high-quality, and portable font engine.
+Version: 23.0.17
+Requires:
+Requires.private: zlib
+Libs: -L${libdir} -lfreetype
+Libs.private: 
+Cflags: -I${includedir}/freetype2
