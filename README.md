@@ -28,7 +28,7 @@ make rpi
 
 ## Exemples 
 
-Pour compiler et transferer les examples fournis avec les libs :
+Pour compiler et transferer les examples fournis avec les libs (Buzzer, matrice et segments) :
 
 ```bash
 make examples
