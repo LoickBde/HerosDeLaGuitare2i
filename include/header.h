@@ -9,8 +9,8 @@
 #define SIZE_SIDE 150
 #define SIZE_BOT 80
 #define NB_STRING 4
-#define NB_NOTE_STRING 2 
-#define NB_NOTE 8 //NB_STRING * NB_NOTE_STRING
+#define NB_NOTE_STRING 6 
+#define NB_NOTE 24 //NB_STRING * NB_NOTE_STRING
 #define MUSIC_NOTE_SIZE 25
 #define SPEED_MOVEMENT 2
 #define FPS 30

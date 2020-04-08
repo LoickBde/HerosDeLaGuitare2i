@@ -48,9 +48,9 @@ int main(int argc, char *argv[])
  */
 
 int affichageChoix(SDL_Surface *Surf_fenetre_menu , SDL_Surface *imagedefond_menu,int choixChanson){ 
-    TTF_Font *font1 = NULL;
-    font1 = TTF_OpenFont( "../ressources/fonts/BebasNeue-Regular.ttf", 40);
-    if (font1 == NULL)
+    TTF_Font *font2 = NULL;
+    font2 = TTF_OpenFont( "../ressources/fonts/Nightmare_Hero_Normal.ttf", 50);
+    if (font2 == NULL)
     {
         printf("voilà\n");
     }
@@ -62,30 +62,38 @@ int affichageChoix(SDL_Surface *Surf_fenetre_menu , SDL_Surface *imagedefond_men
 
     SDL_BlitSurface(imagedefond_menu,NULL,Surf_fenetre_menu,NULL);
 
-    SDL_Rect position_txt_titre ={50,40,0,0};
-    message = TTF_RenderText_Solid( font1, "Setlist", textColorNormal);
+    SDL_Rect position_txt_titre ={50,20,0,0};
+    message = TTF_RenderText_Solid( font2, "Setlist", textColorNormal);
     SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_titre); //Fusion des messages et surfaces pour l'affichage
 
-    SDL_Rect position_txt_chanson1 ={20,200,0,0};
+    SDL_Rect position_txt_chanson1 ={20,100,0,0};
 
         
     if (choixChanson != 1)
     {
-        message = TTF_RenderText_Solid( font1, "Mii Channel (Nintendo Wii) - The OneUps", textColorNormal); //on change la police de manière conditionnel
+        message = TTF_RenderText_Solid( font2, "Wagner - Wedding March (start)", textColorNormal); //on change la police de manière conditionnel
     }else{
-        message = TTF_RenderText_Solid( font1, "Mii Channel (Nintendo Wii) - The OneUps", textColorSelect);
+        message = TTF_RenderText_Solid( font2, "Wagner - Wedding March (start)", textColorSelect);
     }
     SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_chanson1); 
 
-    SDL_Rect position_txt_chanson2 ={20,300,0,0};
+    SDL_Rect position_txt_chanson2 ={20,200,0,0};
     if (choixChanson != 2)
     {
-        message = TTF_RenderText_Solid( font1, "Mii Channel (Nintendo Wii) - The OneUps", textColorNormal);
+        message = TTF_RenderText_Solid( font2, "Adele - Hello (start)", textColorNormal);
     }else{
-        message = TTF_RenderText_Solid( font1, "Mii Channel (Nintendo Wii) - The OneUps", textColorSelect);
+        message = TTF_RenderText_Solid( font2, "Adele - Hello (start)", textColorSelect);
     }
     SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_chanson2);
 
+    SDL_Rect position_txt_chanson3 ={20,300,0,0};
+    if (choixChanson != 3)
+    {
+        message = TTF_RenderText_Solid( font2, "Nirvana - Smells Like Teen Spirit (start)", textColorNormal);
+    }else{
+        message = TTF_RenderText_Solid( font2, "Nirvana - Smells Like Teen Spirit (start)", textColorSelect);
+    }
+    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_chanson3);
 
 
     return 0;
@@ -135,8 +143,8 @@ int fenetreChoix(){
                 case SDL_MOUSEBUTTONDOWN:
                     printf("%d / %d\n",evenement_fenetre.button.x,evenement_fenetre.button.y ); // Si la première musiqe est séléctionnée
                     if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 540 &&
-                        evenement_fenetre.button.y > 200 && evenement_fenetre.button.y < 250){
-                        strcpy(titreChanson[0],"../ressources/songs/test.txt");
+                        evenement_fenetre.button.y > 115 && evenement_fenetre.button.y < 165){
+                        strcpy(titreChanson[0],"../ressources/songs/wedding_march.txt");
                         SDL_DestroyWindow(window_choix);
                         SDL_FreeSurface(Surf_fenetre_choix);
                         SDL_FreeSurface(imagedefond_choix);
@@ -144,9 +152,19 @@ int fenetreChoix(){
                         ZoneJeu(titreChanson); //le chemin de la musique
 
                     }
-                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 540 &&
-                        evenement_fenetre.button.y > 300 && evenement_fenetre.button.y < 350){
-                        strcpy(titreChanson[0],"../ressources/songs/test.txt");
+                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 350 &&
+                        evenement_fenetre.button.y > 210 && evenement_fenetre.button.y < 260){
+                        strcpy(titreChanson[0],"../ressources/songs/hello.txt");
+                        SDL_DestroyWindow(window_choix);
+                        SDL_FreeSurface(Surf_fenetre_choix);
+                        SDL_FreeSurface(imagedefond_choix);
+                        fenetre_lance = SDL_FALSE;// on ferme la fenêtre et lance le jeu sur cette musique
+                        ZoneJeu(titreChanson); //le chemin de la musique
+
+                    }
+                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 640 &&
+                        evenement_fenetre.button.y > 310 && evenement_fenetre.button.y < 360){
+                        strcpy(titreChanson[0],"../ressources/songs/nirvana.txt");
                         SDL_DestroyWindow(window_choix);
                         SDL_FreeSurface(Surf_fenetre_choix);
                         SDL_FreeSurface(imagedefond_choix);
@@ -159,7 +177,7 @@ int fenetreChoix(){
                 case SDL_MOUSEMOTION:
                         
                         if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 540 && //on regarde si la souris est au dessus d'un des textes
-                            evenement_fenetre.motion.y > 200 && evenement_fenetre.motion.y < 250){
+                            evenement_fenetre.motion.y > 115 && evenement_fenetre.motion.y < 165){
 
                             if (choixChanson !=1) //si elle est déjà affichée comme séléctionnée, il n'est pas nécessaire de changer l'affichage
                             {
@@ -175,8 +193,8 @@ int fenetreChoix(){
                                 SDL_UpdateWindowSurface(window_choix);
                             }
                         }
-                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 540 &&
-                            evenement_fenetre.motion.y > 300 && evenement_fenetre.motion.y < 350){
+                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 350 &&
+                            evenement_fenetre.motion.y > 210 && evenement_fenetre.motion.y < 260){
 
                             if (choixChanson !=2)
                             {
@@ -186,6 +204,23 @@ int fenetreChoix(){
                             }
                         }else{
                             if (choixChanson == 2)
+                            {
+                                choixChanson = 0;
+                                affichageChoix(Surf_fenetre_choix,imagedefond_choix, choixChanson);
+                                SDL_UpdateWindowSurface(window_choix);
+                            }
+                        }
+                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 640 && //on regarde si la souris est au dessus d'un des textes
+                            evenement_fenetre.motion.y > 310 && evenement_fenetre.motion.y < 360){
+
+                            if (choixChanson !=3) //si elle est déjà affichée comme séléctionnée, il n'est pas nécessaire de changer l'affichage
+                            {
+                                choixChanson = 3;
+                                affichageChoix(Surf_fenetre_choix,imagedefond_choix, choixChanson); //si oui on l'affiche dans une autre police
+                                SDL_UpdateWindowSurface(window_choix);
+                            }
+                        }else{
+                            if (choixChanson == 3)
                             {
                                 choixChanson = 0;
                                 affichageChoix(Surf_fenetre_choix,imagedefond_choix, choixChanson);
