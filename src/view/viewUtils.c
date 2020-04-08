@@ -152,6 +152,7 @@ void SDL_limitFPS(unsigned int limit)
 void initNotesTest(SDL_Rect myRects[]){ //Pour test, a supprimer
     SDL_Rect rectTest = {0,0,MUSIC_NOTE_SIZE, MUSIC_NOTE_SIZE}; //Initialise la zone a dessiner
     int currentString = 0; //Permet de stocker au bon endroit
+    int i,j;
 
     //Version chargement corde par corde
    /*  for(int i=0; i<NB_STRING; i++) //Pour chaque corde on veut NB_NOTE_STRING de note
@@ -168,9 +169,9 @@ void initNotesTest(SDL_Rect myRects[]){ //Pour test, a supprimer
 
     //Chargement chronolologie verticale
     rectTest.y = -150; //Position en y de la note sur la corde
-    for(int j=0; j<NB_NOTE_STRING; j++) //X notes par corde
+    for( j=0; j<NB_NOTE_STRING; j++) //X notes par corde
     {
-        for(int i=0; i<NB_STRING; i++) //Pour chaque corde on veut NB_NOTE_STRING de note
+        for( i=0; i<NB_STRING; i++) //Pour chaque corde on veut NB_NOTE_STRING de note
         {
             rectTest.x = stringPosition[i]-(MUSIC_NOTE_SIZE/2); //On donne la position de la corde en x 
             myRects[currentString] = rectTest;
@@ -214,7 +215,7 @@ void initNotesFromFile(const char* path, SDL_Rect myRects[])
 void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Texture *texture_musicNote, SDL_Rect myRects[], SDL_bool *songFinished)
 {
     unsigned int frameLimit; //Pour les fps, synchro
-
+    int i;
     frameLimit = SDL_GetTicks() + FPS_LIMIT; //Limites pour fps
 
     if(SDL_RenderClear(renderer) != 0)  //Nettoie le render
@@ -224,7 +225,7 @@ void animation(SDL_Renderer *renderer, SDL_Texture *texture_gameBoard, SDL_Textu
     
     *songFinished = SDL_TRUE; //Flag
     
-    for(int i=0; i<NB_NOTE; i++) //Pour toutes les notes
+    for( i=0; i<NB_NOTE; i++) //Pour toutes les notes
     {
         if(myRects[i].y <= HEIGHT) //On regarde si elles valent le coup d'etre affichée
         {
@@ -252,8 +253,8 @@ void checkNoteArea(int cooX, SDL_Rect myRects[])
     SDL_Rect closestNote = {-1, 0, 0, 0}; //Init d'un rectangle qui permet de sauvegarder la note la plus proche
     SDL_Rect intersectZone = {0,0,0,0}; 
     int closestNoteIndex = -1; 
-
-    for(int i=0; i<NB_NOTE; i++) //Pour toute les notes
+    int i;
+    for(i=0; i<NB_NOTE; i++) //Pour toute les notes
     {
         if(myRects[i].x == cooX-(MUSIC_NOTE_SIZE/2) && myRects[i].y+MUSIC_NOTE_SIZE > 0 && myRects[i].y < HEIGHT) //Si sur la bonne corde, et dans l'écran
         {

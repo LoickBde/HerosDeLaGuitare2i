@@ -1,5 +1,5 @@
-all: main.exe playArea.exe main_rpi.exe
-ubuntu: main.exe playArea.exe
+all: main.exe main_rpi.exe
+ubuntu: main.exe
 rpi: main_rpi.exe
 
 #Options de compilation pour compiler SDL2
@@ -13,27 +13,27 @@ CC=$(PATH_CC)/arm-linux-gnueabihf-gcc
 
 #Définitions du chemin des include et lib pour sdl2 sur rpi
 DESTDIR=../../libs
-INC=-I$(DESTDIR)/include/SDL2
+INC=-I$(DESTDIR)/include
 LIB=-L$(DESTDIR)/lib
-OTHERS=-D_REENTRANT -lSDL2
+OPT=-D_REENTRANT -lSDL2
 
 main.exe: main.c playArea.o viewUtils.o
-	gcc -Wall -Wextra -L.\lib -I.\include ./main.c playArea.o viewUtils.o -o main.exe -lSDL2main -lSDL2 -lSDL2_ttf
-	mv main.exe ../../bin/
+	gcc -Wall -Wextra -L.\lib -I.\include ./main.c playArea.o viewUtils.o -o ../../bin/main.exe -lSDL2main -lSDL2 -lSDL2_ttf
 
-main_rpi.exe: main.c
-	$(CC) -Wall -Wextra -L.\lib -I.\include main.c playArea.o viewUtils.o -o main_rpi.exe -lSDL2main -lSDL2 -lSDL2_ttf
-	mv main_rpi.exe ../../bin/
+main_rpi.exe: main.c playAreaRpi.o viewUtilsRpi.o
+	$(CC) $(INC) $(LIB) -Wall -Wextra main.c playArea.o viewUtils.o -o ../../bin/main_rpi.exe -lSDL2main -lSDL2 -lSDL2_ttf -lmatrix -lsegments -lmusic
 
-playArea.exe: playArea.c viewUtils.o
-	gcc playArea.c viewUtils.o $(CONF_OPT_UBU) -o playArea.exe
-	mv playArea.exe ../../bin/
-
-playArea.o: playArea.c viewUtils.o
+playArea.o: playArea.c
 	gcc playArea.c $(CONF_OPT_UBU) -c
+
+playAreaRpi.o: playArea.c 
+	$(CC) $(INC) $(LIB) playArea.c $(OPT) -c
 
 viewUtils.o: viewUtils.c
 	gcc viewUtils.c -c
+
+viewUtilsRpi.o: viewUtils.c
+	$(CC) $(INC) $(LIB) $(OPT) viewUtils.c -c
 
 clean: 
 	rm -rf *.o 
