@@ -15,7 +15,7 @@
 extern const uint8_t seg_numbers[]; //tableau des relations nombre / segments
 int fd;
 
-//Fonction d'init du bus SPI et du 7segments
+//Fonction d'init du bus I2C et du 7segments
 void initSegments();
 void turnOnSegments();
 void turnOffSegments();
