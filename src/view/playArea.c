@@ -12,9 +12,11 @@ int ZoneJeu(char path[1][40])
 
 
     initSDLbasics(&window, &renderer, "Zone de jeu"); //Initialise les bases de la sdl (fenetre, renderer)
-    initSegments();
-    initMatrix();
-    initMusic();
+    #if defined(_RPI)
+        initSegments();
+        initMatrix();
+        initMusic();
+    #endif
 
     initTexturesGameBoard(renderer, &texture_foreground, &texture_background, &texture_gameBoard); 
     
