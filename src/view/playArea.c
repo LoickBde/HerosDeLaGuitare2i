@@ -74,7 +74,8 @@ int ZoneJeu(char path[1][40])
     SDL_DestroyTexture(texture_gameBoard); 
     SDL_DestroyRenderer(renderer); //Detruit le render
     SDL_DestroyWindow(window); //Détruit la fenetre
-    SDL_Quit(); //Quitte la sdl
+    fenetreChoix();
+   // SDL_Quit(); //Quitte la sdl
 
     return EXIT_SUCCESS;
 }
