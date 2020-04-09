@@ -3,7 +3,7 @@
 char good[] = {0x3C,0x42,0xA5,0x81,0xA5,0x99,0x42,0x3C};
 char bad[] = {0x3C,0x42,0xA5,0x81,0x99,0xA5,0x42,0x3C};
 
-char test[] = { 
+char testMatrix[] = { 
 	0b11111111,
 	0b00000000,
 	0b00000000,
@@ -59,7 +59,7 @@ void drawMatrix(char * toDraw){
 }
 
 void drawTest(){
-	drawMatrix(test);
+	drawMatrix(testMatrix);
 }
 
 void drawGood(){
