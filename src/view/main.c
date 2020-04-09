@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 #include "viewUtils.h" 
 
 
@@ -21,16 +20,11 @@ int main(int argc, char *argv[])
     //Lancement SDL
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
         SDL_ExitWithError("Initialisation SDL");
-    if(TTF_Init() == -1)
-    {
-        fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-        exit(EXIT_FAILURE);
-    }
+
     if (fenetreMenu() != 0)
     {
         SDL_ExitWithError("Erreur fenetre");
     }
-    TTF_Quit();
     SDL_Quit();
     
     return EXIT_SUCCESS;
@@ -47,53 +41,53 @@ int main(int argc, char *argv[])
  */
 
 int affichageChoix(SDL_Surface *Surf_fenetre_menu , SDL_Surface *imagedefond_menu,int choixChanson){ 
-    TTF_Font *font2 = NULL;
-    font2 = TTF_OpenFont( "../ressources/fonts/Nightmare_Hero_Normal.ttf", 50);
-    if (font2 == NULL)
-    {
-        printf("voilà\n");
-    }
 
-    SDL_Color textColorNormal = { 0, 0, 0, 180 };
-    SDL_Color textColorSelect = { 255, 48, 25, 255 };
-    SDL_Surface *message = NULL;
+    SDL_Surface *titre = NULL;
 
 
     SDL_BlitSurface(imagedefond_menu,NULL,Surf_fenetre_menu,NULL);
 
     SDL_Rect position_txt_titre ={50,20,0,0};
-    message = TTF_RenderText_Solid( font2, "Setlist", textColorNormal);
-    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_titre); //Fusion des messages et surfaces pour l'affichage
+    titre = SDL_LoadBMP("../ressources/img/text/setlist_black.bmp");
+    SDL_BlitSurface(titre, NULL, Surf_fenetre_menu,&position_txt_titre); //Fusion des messages et surfaces pour l'affichage
+
+    SDL_Surface *imagetexte_adele=NULL;
+    SDL_Surface *imagetexte_wagner=NULL;
+    SDL_Surface *imagetexte_nirvana=NULL;
 
     SDL_Rect position_txt_chanson1 ={20,100,0,0};
 
         
     if (choixChanson != 1)
     {
-        message = TTF_RenderText_Solid( font2, "Wagner - Wedding March (start)", textColorNormal); //on change la police de manière conditionnel
+        imagetexte_wagner = SDL_LoadBMP("../ressources/img/text/wagner_black.bmp"); //on change la police de manière conditionnel
     }else{
-        message = TTF_RenderText_Solid( font2, "Wagner - Wedding March (start)", textColorSelect);
+        imagetexte_wagner = SDL_LoadBMP("../ressources/img/text/wagner_red.bmp");
     }
-    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_chanson1); 
+    SDL_BlitSurface(imagetexte_wagner, NULL, Surf_fenetre_menu,&position_txt_chanson1); 
 
     SDL_Rect position_txt_chanson2 ={20,200,0,0};
     if (choixChanson != 2)
     {
-        message = TTF_RenderText_Solid( font2, "Adele - Hello (start)", textColorNormal);
+        imagetexte_adele = SDL_LoadBMP("../ressources/img/text/adele_black.bmp");
     }else{
-        message = TTF_RenderText_Solid( font2, "Adele - Hello (start)", textColorSelect);
+        imagetexte_adele = SDL_LoadBMP("../ressources/img/text/adele_red.bmp");
     }
-    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_chanson2);
+    SDL_BlitSurface(imagetexte_adele, NULL, Surf_fenetre_menu,&position_txt_chanson2);
 
     SDL_Rect position_txt_chanson3 ={20,300,0,0};
     if (choixChanson != 3)
     {
-        message = TTF_RenderText_Solid( font2, "Nirvana - Smells Like Teen Spirit (start)", textColorNormal);
+        imagetexte_nirvana = SDL_LoadBMP("../ressources/img/text/nirvana_black.bmp");
     }else{
-        message = TTF_RenderText_Solid( font2, "Nirvana - Smells Like Teen Spirit (start)", textColorSelect);
+        imagetexte_nirvana = SDL_LoadBMP("../ressources/img/text/nirvana_red.bmp");
     }
-    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_chanson3);
+    SDL_BlitSurface(imagetexte_nirvana, NULL, Surf_fenetre_menu,&position_txt_chanson3);
 
+    SDL_FreeSurface(titre);
+    SDL_FreeSurface(imagetexte_adele);
+    SDL_FreeSurface(imagetexte_nirvana);
+    SDL_FreeSurface(imagetexte_wagner);
 
     return 0;
 }
@@ -141,32 +135,32 @@ int fenetreChoix(){
             switch(evenement_fenetre.type){
                 case SDL_MOUSEBUTTONDOWN:
                     printf("%d / %d\n",evenement_fenetre.button.x,evenement_fenetre.button.y ); // Si la première musiqe est séléctionnée
-                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 540 &&
-                        evenement_fenetre.button.y > 115 && evenement_fenetre.button.y < 165){
+                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 575 &&
+                        evenement_fenetre.button.y > 110 && evenement_fenetre.button.y < 150){
                         strcpy(titreChanson[0],"../ressources/songs/wedding_march.txt");
-                        SDL_DestroyWindow(window_choix);
                         SDL_FreeSurface(Surf_fenetre_choix);
                         SDL_FreeSurface(imagedefond_choix);
+                        SDL_DestroyWindow(window_choix);
                         fenetre_lance = SDL_FALSE;// on ferme la fenêtre et lance le jeu sur cette musique
                         ZoneJeu(titreChanson); //le chemin de la musique
 
                     }
-                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 350 &&
-                        evenement_fenetre.button.y > 210 && evenement_fenetre.button.y < 260){
+                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 370 &&
+                        evenement_fenetre.button.y > 200 && evenement_fenetre.button.y < 260){
+                        SDL_FreeSurface(Surf_fenetre_choix);
+                        SDL_FreeSurface(imagedefond_choix);
                         strcpy(titreChanson[0],"../ressources/songs/hello.txt");
                         SDL_DestroyWindow(window_choix);
-                        SDL_FreeSurface(Surf_fenetre_choix);
-                        SDL_FreeSurface(imagedefond_choix);
                         fenetre_lance = SDL_FALSE;// on ferme la fenêtre et lance le jeu sur cette musique
                         ZoneJeu(titreChanson); //le chemin de la musique
 
                     }
-                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 640 &&
-                        evenement_fenetre.button.y > 310 && evenement_fenetre.button.y < 360){
+                    if (evenement_fenetre.button.x > 20 && evenement_fenetre.button.x < 690 &&
+                        evenement_fenetre.button.y > 300 && evenement_fenetre.button.y < 360){
                         strcpy(titreChanson[0],"../ressources/songs/nirvana.txt");
-                        SDL_DestroyWindow(window_choix);
                         SDL_FreeSurface(Surf_fenetre_choix);
                         SDL_FreeSurface(imagedefond_choix);
+                        SDL_DestroyWindow(window_choix);
                         fenetre_lance = SDL_FALSE;// on ferme la fenêtre et lance le jeu sur cette musique
                         ZoneJeu(titreChanson); //le chemin de la musique
 
@@ -175,8 +169,8 @@ int fenetreChoix(){
 
                 case SDL_MOUSEMOTION:
                         
-                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 540 && //on regarde si la souris est au dessus d'un des textes
-                            evenement_fenetre.motion.y > 115 && evenement_fenetre.motion.y < 165){
+                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 575 && //on regarde si la souris est au dessus d'un des textes
+                            evenement_fenetre.motion.y > 110 && evenement_fenetre.motion.y < 150){
 
                             if (choixChanson !=1) //si elle est déjà affichée comme séléctionnée, il n'est pas nécessaire de changer l'affichage
                             {
@@ -192,8 +186,8 @@ int fenetreChoix(){
                                 SDL_UpdateWindowSurface(window_choix);
                             }
                         }
-                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 350 &&
-                            evenement_fenetre.motion.y > 210 && evenement_fenetre.motion.y < 260){
+                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 370 &&
+                            evenement_fenetre.motion.y > 200 && evenement_fenetre.motion.y < 260){
 
                             if (choixChanson !=2)
                             {
@@ -209,8 +203,8 @@ int fenetreChoix(){
                                 SDL_UpdateWindowSurface(window_choix);
                             }
                         }
-                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 640 && //on regarde si la souris est au dessus d'un des textes
-                            evenement_fenetre.motion.y > 310 && evenement_fenetre.motion.y < 360){
+                        if (evenement_fenetre.motion.x > 20 && evenement_fenetre.motion.x < 690 && //on regarde si la souris est au dessus d'un des textes
+                            evenement_fenetre.motion.y > 300 && evenement_fenetre.motion.y < 360){
 
                             if (choixChanson !=3) //si elle est déjà affichée comme séléctionnée, il n'est pas nécessaire de changer l'affichage
                             {
@@ -253,44 +247,35 @@ int fenetreChoix(){
  * @return     { description_of_the_return_value }
  */
 int affichageMenu(SDL_Surface *Surf_fenetre_menu , SDL_Surface *imagedefond_menu,SDL_Surface *imagedetitre_menu,SDL_bool option_select,SDL_bool quitter_select){
-    TTF_Font *font1 = NULL;
-    font1 = TTF_OpenFont( "../ressources/fonts/BebasNeue-Regular.ttf", 50);
-    if (font1 == NULL)
-    {
-        printf("Police non chargée\n");
-    }
-
-    SDL_Color textColorNormal = { 0, 0, 0, 180 };
-    SDL_Color textColorSelect = { 150, 150, 20, 255 };
-    SDL_Surface *message = NULL;
-
 
     SDL_BlitSurface(imagedefond_menu,NULL,Surf_fenetre_menu,NULL);
     SDL_Rect position_txt_title ={(WIDTH-553)/2,20,0,0};
     
     SDL_BlitSurface(imagedetitre_menu, NULL, Surf_fenetre_menu,&position_txt_title);
 
-    SDL_Rect position_txt_option ={(WIDTH-230)/2,150,0,0};
-
+    SDL_Rect position_txt_option ={(WIDTH-330)/2,150,0,0};
+    SDL_Surface *imagetexte_choix=NULL;
+    SDL_Surface *imagetexte_quitter=NULL;
         
     if (option_select == SDL_FALSE) //on affiche conditionnellement le texte, si il est séléctionné ou non 
     {
-        message = TTF_RenderText_Solid( font1, "Choix chanson", textColorNormal);
+        imagetexte_choix = SDL_LoadBMP("../ressources/img/text/choix_black.bmp");
     }else{
-        message = TTF_RenderText_Solid( font1, "Choix chanson", textColorSelect);
+        imagetexte_choix = SDL_LoadBMP("../ressources/img/text/choix_yellow.bmp");
     }
-    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_option);
+    SDL_BlitSurface(imagetexte_choix, NULL, Surf_fenetre_menu,&position_txt_option);
 
-    SDL_Rect position_txt_quitter ={(WIDTH-100)/2,300,0,0};
+    SDL_Rect position_txt_quitter ={(WIDTH-170)/2,300,0,0};
     if (quitter_select == SDL_FALSE)
     {
-    message = TTF_RenderText_Solid( font1, "Quitter", textColorNormal);
+        imagetexte_quitter = SDL_LoadBMP("../ressources/img/text/quitter_black.bmp");
     }else{
-        message = TTF_RenderText_Solid( font1, "Quitter", textColorSelect);
+        imagetexte_quitter = SDL_LoadBMP("../ressources/img/text/quitter_yellow.bmp");
     }
-    SDL_BlitSurface(message, NULL, Surf_fenetre_menu,&position_txt_quitter);
+    SDL_BlitSurface(imagetexte_quitter, NULL, Surf_fenetre_menu,&position_txt_quitter);
 
-
+    SDL_FreeSurface(imagetexte_quitter);
+    SDL_FreeSurface(imagetexte_choix);
 
     return 0;
 }
@@ -348,24 +333,24 @@ int fenetreMenu(){
             switch(evenement_fenetre.type){ //si l'on clique sur une des option, on réagit en conseéquence
                 case SDL_MOUSEBUTTONDOWN:
                     printf("%d / %d\n",evenement_fenetre.button.x,evenement_fenetre.button.y );
-                    if (evenement_fenetre.button.x > 280 && evenement_fenetre.button.x < 520 &&
-                        evenement_fenetre.button.y > 160 && evenement_fenetre.button.y < 200){
-                        SDL_DestroyWindow(window_menu);
+                    if (evenement_fenetre.button.x > 235 && evenement_fenetre.button.x < 565 &&
+                        evenement_fenetre.button.y > 155 && evenement_fenetre.button.y < 210){
                         SDL_FreeSurface(imagedefond_menu);
                         SDL_FreeSurface(Surf_fenetre_menu);
                         SDL_FreeSurface(imagedetitre_menu);
+                        SDL_DestroyWindow(window_menu);
                         fenetre_lance = SDL_FALSE;
                         fenetreChoix(); //destruction fenêtre et ouverture de l'autre fenêtre
                     }
-                    if (evenement_fenetre.button.x > 350 && evenement_fenetre.button.x < 480 &&
-                            evenement_fenetre.button.y > 310 && evenement_fenetre.button.y < 350){
+                    if (evenement_fenetre.button.x > 315 && evenement_fenetre.button.x < 490 &&
+                            evenement_fenetre.button.y > 300 && evenement_fenetre.button.y < 360){
                         fenetre_lance = SDL_FALSE; //quitte le programme
                     }
                     break;
 
                 case SDL_MOUSEMOTION:
-                        if (evenement_fenetre.motion.x > 280 && evenement_fenetre.motion.x < 520 && 
-                            evenement_fenetre.motion.y > 160 && evenement_fenetre.motion.y < 200){
+                        if (evenement_fenetre.motion.x > 235 && evenement_fenetre.motion.x < 565 && 
+                            evenement_fenetre.motion.y > 155 && evenement_fenetre.motion.y < 210){
 
                             if (option_select == SDL_FALSE) //Si oui et qu'il n'est pas déjà afficher en survolé, alors on change pour le mettre en survolé
                             {
@@ -381,8 +366,8 @@ int fenetreMenu(){
                                 SDL_UpdateWindowSurface(window_menu);
                             }
                         }
-                        if (evenement_fenetre.motion.x > 350 && evenement_fenetre.motion.x < 480 &&
-                            evenement_fenetre.motion.y > 310 && evenement_fenetre.motion.y < 350){
+                        if (evenement_fenetre.motion.x > 315 && evenement_fenetre.motion.x < 490 &&
+                            evenement_fenetre.motion.y > 300 && evenement_fenetre.motion.y < 360){
 
                             if (quitter_select == SDL_FALSE)
                             {
