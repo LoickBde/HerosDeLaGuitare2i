@@ -75,6 +75,10 @@ int ZoneJeu(char path[1][40])
     
     //---- TEST ----//
 
+    #if defined(_RPI)
+        turnOffSegments();
+        turnOffMatrix();
+    #endif
     SDL_DestroyTexture(texture_musicNote); //Détruit les textures restantes
     SDL_DestroyTexture(texture_gameBoard); 
     SDL_DestroyRenderer(renderer); //Detruit le render
