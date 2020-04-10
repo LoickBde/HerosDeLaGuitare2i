@@ -1,5 +1,5 @@
 #include "../../include/header.h"
-#if defined(_RPI)
+#if defined (_RPI)
     #include <music.h>
     #include <segments.h>
     #include <matrix.h>
